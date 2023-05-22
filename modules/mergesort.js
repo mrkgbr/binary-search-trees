@@ -1,4 +1,7 @@
-function mergeSort(originalArray) {
+import { removeDuplicates } from "./remove.js";
+
+export function mergeSort(originalArray) {
+  originalArray = removeDuplicates(originalArray);
   const originalArrayLength = originalArray.length;
   if (originalArrayLength <= 1) {
     return originalArray;
@@ -36,8 +39,8 @@ function merge(newLeftArray, newRightArray) {
   return newArray;
 }
 
-console.log(mergeSort([])); // []
-console.log(mergeSort([1])); // []
-console.log(mergeSort([721, 678, 230, 910, 685, 360, 207, 985])); // [207, 230, 360, 678, 685, 721, 910, 985]
-console.log(mergeSort([10, 7, 8, 9, 1, 5])); // [1, 5, 7, 8, 9, 10]
-console.log(mergeSort([30, 20, 10, 50, 22, 33, 55])); //[10, 20, 22, 30, 33, 50, 55]
+// console.log(mergeSort([])); // []
+// console.log(mergeSort([1])); // []
+// console.log(mergeSort([721, 678, 230, 910, 685, 360, 207, 985])); // [207, 230, 360, 678, 685, 721, 910, 985]
+// console.log(mergeSort([10, 7, 8, 9, 1, 5])); // [1, 5, 7, 8, 9, 10]
+// console.log(mergeSort([30, 20, 10, 50, 22, 33, 55])); //[10, 20, 22, 30, 33, 50, 55]
