@@ -45,15 +45,49 @@ function tree(array) {
         side = "right";
       }
     }
-    if (side == "left") {
-      prevNode.left = newNode;
-    } else if (side == "right") {
-      prevNode.right = newNode;
-    }
+    // if (side == "left") {
+    //   prevNode.left = newNode;
+    // } else if (side == "right") {
+    //   prevNode.right = newNode;
+    // }
+    prevNode[side] = newNode;
   }
 
   function deleteData(data) {
     // accepts a value to delete a node
+    let currentNode = root;
+    let prevNode = null;
+    let side = null;
+    while (currentNode) {
+      if (currentNode.data == data) {
+        if (!currentNode.left || !currentNode.right) {
+          prevNode[side] = currentNode.left
+            ? currentNode.left
+            : currentNode.right;
+          return;
+        } else {
+          if (currentNode.right.left) {
+            console.log("A");
+            prevNode[side] = currentNode.right.left;
+            currentNode.right.left = currentNode.right.left.right;
+          } else {
+            console.log("B");
+            prevNode[side] = currentNode.right;
+            currentNode.right.left = currentNode.left;
+          }
+          return;
+        }
+      }
+      prevNode = currentNode;
+      if (data < currentNode.data) {
+        currentNode = currentNode.left;
+        side = "left";
+      } else {
+        currentNode = currentNode.right;
+        side = "right";
+      }
+    }
+    return null;
   }
 
   function findData(data) {
@@ -72,17 +106,19 @@ function tree(array) {
     return null;
   }
 
-  return { root, findData, insertData };
+  return { root, findData, insertData, deleteData };
 }
 
-let myTree = tree([5, 7, 9, 10, 13, 15, 17, 22, 25, 27]);
-prettyPrint(myTree.root);
+let myTree = tree([
+  5, 7, 9, 10, 11, 13, 15, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27,
+]);
 myTree.insertData(8);
 myTree.insertData(5);
 myTree.insertData(30);
 myTree.insertData(16);
 prettyPrint(myTree.root);
-console.log(myTree.findData(16));
+myTree.deleteData(22);
+prettyPrint(myTree.root);
 
 /*
 1. Take an array
