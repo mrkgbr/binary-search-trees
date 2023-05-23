@@ -1,4 +1,5 @@
 import { mergeSort } from "./modules/mergesort.js";
+import { prettyPrint } from "./modules/prettyprint.js";
 
 function node(data, left = null, right = null) {
   return {
@@ -25,27 +26,63 @@ function tree(array) {
     return newNode;
   }
 
-  return root;
+  function insertData(data) {
+    // accepts a value to insert a node
+    let currentNode = root;
+    let prevNode = null;
+    let side = null;
+    let newNode = node(data);
+    while (currentNode) {
+      if (currentNode.data == data) {
+        return;
+      }
+      prevNode = currentNode;
+      if (data < currentNode.data) {
+        currentNode = currentNode.left;
+        side = "left";
+      } else {
+        currentNode = currentNode.right;
+        side = "right";
+      }
+    }
+    if (side == "left") {
+      prevNode.left = newNode;
+    } else if (side == "right") {
+      prevNode.right = newNode;
+    }
+  }
+
+  function deleteData(data) {
+    // accepts a value to delete a node
+  }
+
+  function findData(data) {
+    // accepts a value and returns the node with the given value
+    let currentNode = root;
+    while (currentNode) {
+      if (currentNode.data == data) {
+        return currentNode;
+      }
+      if (data < currentNode.data) {
+        currentNode = currentNode.left;
+      } else {
+        currentNode = currentNode.right;
+      }
+    }
+    return null;
+  }
+
+  return { root, findData, insertData };
 }
 
-const prettyPrint = (node, prefix = "", isLeft = true) => {
-  if (node === null) {
-    return;
-  }
-  if (node.right !== null) {
-    prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
-  }
-  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
-  if (node.left !== null) {
-    prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
-  }
-};
-
-// prettyPrint(tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]));
-// prettyPrint(tree([1, 2, 3, 4]));
-prettyPrint(tree([5, 7, 9, 10, 13, 15, 17, 22, 25, 27]));
-
-// console.log(tree([1, 2, 3, 4, 5, 6, 7]));
+let myTree = tree([5, 7, 9, 10, 13, 15, 17, 22, 25, 27]);
+prettyPrint(myTree.root);
+myTree.insertData(8);
+myTree.insertData(5);
+myTree.insertData(30);
+myTree.insertData(16);
+prettyPrint(myTree.root);
+console.log(myTree.findData(16));
 
 /*
 1. Take an array
