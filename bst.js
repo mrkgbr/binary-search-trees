@@ -2,6 +2,7 @@ import { mergeSort } from "./modules/mergesort.js";
 import { prettyPrint } from "./modules/prettyprint.js";
 
 function node(data, left = null, right = null) {
+  // accepts 3 value to create a node
   return {
     data: data,
     left: left,
@@ -10,10 +11,12 @@ function node(data, left = null, right = null) {
 }
 
 function tree(array) {
+  // accepts an array when initialized
   array = mergeSort(array);
   let root = buildTree(array);
 
   function buildTree(arr) {
+    // Recursive calls for building the tree.
     if (arr.length == 0) {
       return null;
     }
