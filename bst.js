@@ -103,7 +103,8 @@ function tree(array) {
   }
 
   function findData(data) {
-    // accepts a value and returns the node with the given value
+    // accepts a value and returns the node
+    // with the given value
     let currentNode = root;
     while (currentNode) {
       if (currentNode.data == data) {
@@ -118,6 +119,43 @@ function tree(array) {
     return null;
   }
 
+  function levelOrder(func = null) {
+    // Accepts another function as a parameter.
+    // Should traverse the tree in breadth-first
+    // level order and provide each node as the
+    // argument to the provided function.
+    // The method should return an array of values
+    // if no function is given.
+  }
+
+  function inorder(func = null) {
+    //
+  }
+
+  function preorder(func = null) {
+    //
+  }
+
+  function postorder(func = null) {
+    //
+  }
+
+  function height() {
+    //
+  }
+
+  function depth() {
+    //
+  }
+
+  function isBalanced() {
+    //
+  }
+
+  function rebalance() {
+    //
+  }
+
   return { root, findData, insertData, deleteData };
 }
 
@@ -128,9 +166,8 @@ myTree.insertData(8);
 myTree.insertData(5);
 myTree.insertData(30);
 myTree.insertData(16);
-let myRoot = myTree.root;
 prettyPrint(myTree.root);
-myTree.deleteData(myRoot, 23);
+myTree.deleteData(myTree.root, 23);
 prettyPrint(myTree.root);
 
 /*
