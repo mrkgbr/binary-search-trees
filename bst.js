@@ -45,49 +45,61 @@ function tree(array) {
         side = "right";
       }
     }
-    // if (side == "left") {
-    //   prevNode.left = newNode;
-    // } else if (side == "right") {
-    //   prevNode.right = newNode;
-    // }
     prevNode[side] = newNode;
   }
 
-  function deleteData(data) {
-    // accepts a value to delete a node
-    let currentNode = root;
-    let prevNode = null;
-    let side = null;
-    while (currentNode) {
-      if (currentNode.data == data) {
-        if (!currentNode.left || !currentNode.right) {
-          prevNode[side] = currentNode.left
-            ? currentNode.left
-            : currentNode.right;
-          return;
-        } else {
-          if (currentNode.right.left) {
-            console.log("A");
-            prevNode[side] = currentNode.right.left;
-            currentNode.right.left = currentNode.right.left.right;
-          } else {
-            console.log("B");
-            prevNode[side] = currentNode.right;
-            currentNode.right.left = currentNode.left;
-          }
-          return;
-        }
-      }
-      prevNode = currentNode;
-      if (data < currentNode.data) {
-        currentNode = currentNode.left;
-        side = "left";
-      } else {
-        currentNode = currentNode.right;
-        side = "right";
-      }
+  function deleteData(root, k) {
+    // Base case
+    if (root == null) return root;
+
+    // Recursive calls for ancestors of
+    // node to be deleted
+    if (root.data > k) {
+      root.left = deleteData(root.left, k);
+      return root;
+    } else if (root.data < k) {
+      root.right = deleteData(root.right, k);
+      return root;
     }
-    return null;
+
+    // We reach here when root is the node
+    // to be deleted.
+
+    // If one of the children is empty
+    if (root.left == null) {
+      let temp = root.right;
+      return temp;
+    } else if (root.right == null) {
+      let temp = root.left;
+      return temp;
+    }
+
+    // If both children exist
+    else {
+      let succParent = root;
+
+      // Find successor
+      let succ = root.right;
+
+      while (succ.left != null) {
+        succParent = succ;
+        succ = succ.left;
+      }
+
+      // Delete successor. Since successor
+      // is always left child of its parent
+      // we can safely make successor's right
+      // right child as left of its parent.
+      // If there is no succ, then assign
+      // succ->right to succParent->right
+      if (succParent != root) succParent.left = succ.right;
+      else succParent.right = succ.right;
+
+      // Copy Successor Data to root
+      root.data = succ.data;
+
+      return root;
+    }
   }
 
   function findData(data) {
@@ -116,8 +128,9 @@ myTree.insertData(8);
 myTree.insertData(5);
 myTree.insertData(30);
 myTree.insertData(16);
+let myRoot = myTree.root;
 prettyPrint(myTree.root);
-myTree.deleteData(22);
+myTree.deleteData(myRoot, 23);
 prettyPrint(myTree.root);
 
 /*
