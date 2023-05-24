@@ -199,18 +199,29 @@ function tree(array) {
   };
 }
 
-let myTree = tree([5, 7, 9, 10, 11, 13, 15, 17, 19, 20, 21]);
+function randomArray(numOfItems) {
+  let arr = [];
+  for (let i = 0; i < numOfItems; i++) {
+    let randomNum = Math.floor(Math.random() * 1000);
+    arr.push(randomNum);
+  }
+  return arr;
+}
+
+let myArr = randomArray(15);
+let myTree = tree(myArr);
+let myRoot = myTree.root;
 myTree.insertData(8);
 myTree.insertData(5);
 myTree.insertData(30);
 myTree.insertData(16);
-prettyPrint(myTree.root);
+prettyPrint(myRoot);
 // myTree.deleteData(myTree.root, 23);
 // prettyPrint(myTree.root);
 // myTree.levelOrder();
-console.log(myTree.inorder(myTree.root));
-console.log(myTree.preorder(myTree.root));
-console.log(myTree.postorder(myTree.root));
+console.log(myTree.inorder(myRoot));
+console.log(myTree.preorder(myRoot));
+console.log(myTree.postorder(myRoot));
 // myTree.preorder(myTree.root);
 // myTree.postorder(myTree.root);
 
