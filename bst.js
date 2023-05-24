@@ -144,16 +144,31 @@ function tree(array) {
     }
   }
 
-  function inorder(func = null) {
+  function inorder(root = null) {
     //
+    if (root == null) return [];
+    let left = inorder(root.left);
+    let data = [root.data];
+    let right = inorder(root.right);
+    return [...left, ...data, ...right];
   }
 
-  function preorder(func = null) {
+  function preorder(root = null) {
     //
+    if (root == null) return [];
+    let data = [root.data];
+    let left = preorder(root.left);
+    let right = preorder(root.right);
+    return [...data, ...left, ...right];
   }
 
-  function postorder(func = null) {
+  function postorder(root = null) {
     //
+    if (root == null) return [];
+    let left = postorder(root.left);
+    let right = postorder(root.right);
+    let data = [root.data];
+    return [...left, ...right, ...data];
   }
 
   function height() {
@@ -172,20 +187,32 @@ function tree(array) {
     //
   }
 
-  return { root, findData, insertData, deleteData, levelOrder };
+  return {
+    root,
+    findData,
+    insertData,
+    deleteData,
+    levelOrder,
+    inorder,
+    preorder,
+    postorder,
+  };
 }
 
-let myTree = tree([
-  5, 7, 9, 10, 11, 13, 15, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27,
-]);
+let myTree = tree([5, 7, 9, 10, 11, 13, 15, 17, 19, 20, 21]);
 myTree.insertData(8);
 myTree.insertData(5);
 myTree.insertData(30);
 myTree.insertData(16);
 prettyPrint(myTree.root);
-myTree.deleteData(myTree.root, 23);
-prettyPrint(myTree.root);
-myTree.levelOrder();
+// myTree.deleteData(myTree.root, 23);
+// prettyPrint(myTree.root);
+// myTree.levelOrder();
+console.log(myTree.inorder(myTree.root));
+console.log(myTree.preorder(myTree.root));
+console.log(myTree.postorder(myTree.root));
+// myTree.preorder(myTree.root);
+// myTree.postorder(myTree.root);
 
 /*
 1. Take an array
