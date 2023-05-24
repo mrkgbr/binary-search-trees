@@ -129,6 +129,19 @@ function tree(array) {
     // argument to the provided function.
     // The method should return an array of values
     // if no function is given.
+    let queue = [];
+    queue.push(root);
+    while (queue.length != 0) {
+      let currentNode = queue[0];
+      if (currentNode.left) {
+        queue.push(currentNode.left);
+      }
+      if (currentNode.right) {
+        queue.push(currentNode.right);
+      }
+      console.log(currentNode.data);
+      queue.shift();
+    }
   }
 
   function inorder(func = null) {
@@ -159,7 +172,7 @@ function tree(array) {
     //
   }
 
-  return { root, findData, insertData, deleteData };
+  return { root, findData, insertData, deleteData, levelOrder };
 }
 
 let myTree = tree([
@@ -172,6 +185,7 @@ myTree.insertData(16);
 prettyPrint(myTree.root);
 myTree.deleteData(myTree.root, 23);
 prettyPrint(myTree.root);
+myTree.levelOrder();
 
 /*
 1. Take an array
