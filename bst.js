@@ -145,7 +145,8 @@ function tree(array) {
   }
 
   function inorder(root = null) {
-    //
+    // traverse the tree in inorder
+    // and return an array of values
     if (root == null) return [];
     let left = inorder(root.left);
     let data = [root.data];
@@ -154,7 +155,8 @@ function tree(array) {
   }
 
   function preorder(root = null) {
-    //
+    // traverse the tree in preorder
+    // and return an array of values
     if (root == null) return [];
     let data = [root.data];
     let left = preorder(root.left);
@@ -163,7 +165,8 @@ function tree(array) {
   }
 
   function postorder(root = null) {
-    //
+    // traverse the tree in postorder
+    // and return an array of values
     if (root == null) return [];
     let left = postorder(root.left);
     let right = postorder(root.right);
