@@ -191,6 +191,7 @@ function tree(array) {
     return getHeight(currentRoot);
 
     function getHeight(root, counter = 0) {
+      // recursive find the longest side
       if (root == null) return counter;
       if (root != currentRoot) counter++;
       const left = getHeight(root.left, counter);
@@ -217,14 +218,19 @@ function tree(array) {
   }
 
   function isBalanced(currentRoot = root) {
-    //
+    // Accepts a node and returns its depth.
+    // Depth is defined as the number of edges
+    // in path from a given node to the tree’s root node.
     let result = balancedHeight(currentRoot);
     if (result == -1) return false;
     return true;
   }
 
   function balancedHeight(currentRoot) {
-    //
+    // Function which checks if the tree is balanced.
+    // A balanced tree is one where the difference
+    // between heights of left subtree and right subtree
+    // of every node is not more than 1.
     if (currentRoot == null) {
       return 0;
     }
@@ -238,8 +244,11 @@ function tree(array) {
     return Math.max(leftNode, rightNode) + 1;
   }
 
-  function rebalance() {
+  function rebalance(currentRoot = root) {
     //
+    let arr = preorder(currentRoot);
+    let newRoot = buildTree(arr);
+    myTree.root = newRoot;
   }
 
   return {
@@ -254,6 +263,7 @@ function tree(array) {
     height,
     depth,
     isBalanced,
+    rebalance,
   };
 }
 
@@ -274,8 +284,8 @@ let myRoot = myTree.root;
 // myTree.insertData(5);
 // myTree.insertData(30);
 myTree.insertData(16);
-// myTree.insertData(17);
-// myTree.insertData(18);
+myTree.insertData(17);
+myTree.insertData(18);
 // prettyPrint(myRoot);
 // myTree.deleteData(myTree.root, 23);
 prettyPrint(myTree.root);
@@ -285,11 +295,12 @@ prettyPrint(myTree.root);
 // console.log(myTree.postorder(myRoot));
 // console.log(myTree.height(8));
 // console.log(myTree.depth(8));
-console.log(myTree.isBalanced());
+// console.log(myTree.isBalanced());
 
 // myTree.preorder(myTree.root);
 // myTree.postorder(myTree.root);
-
+myTree.rebalance();
+prettyPrint(myTree.root);
 /*
 1. Take an array
 2. Set middle as root
