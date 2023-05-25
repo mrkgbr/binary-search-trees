@@ -174,16 +174,68 @@ function tree(array) {
     return [...left, ...right, ...data];
   }
 
-  function height() {
-    //
+  function height(data, currentRoot = root) {
+    // Accepts a node and returns its height.
+    // Height is defined as the number of edges
+    // in longest path from a given node to a leaf node.
+    if (currentRoot == null) return;
+    while (currentRoot) {
+      if (data < currentRoot.data) {
+        currentRoot = currentRoot.left;
+      } else if (data > currentRoot.data) {
+        currentRoot = currentRoot.right;
+      }
+      break;
+    }
+
+    return getHeight(currentRoot);
+
+    function getHeight(root, counter = 0) {
+      if (root == null) return counter;
+      if (root != currentRoot) counter++;
+      const left = getHeight(root.left, counter);
+      const right = getHeight(root.right, counter);
+      return left > right ? left : right;
+    }
   }
 
-  function depth() {
+  function depth(data, currentRoot = root) {
     //
+    if (currentRoot == null) return;
+    let counter = 0;
+    while (currentRoot) {
+      if (data < currentRoot.data) {
+        currentRoot = currentRoot.left;
+        counter++;
+      } else if (data > currentRoot.data) {
+        currentRoot = currentRoot.right;
+        counter++;
+      }
+      break;
+    }
+    return counter;
   }
 
-  function isBalanced() {
+  function isBalanced(currentRoot = root) {
     //
+    let result = balancedHeight(currentRoot);
+    if (result == -1) return false;
+    return true;
+  }
+
+  function balancedHeight(currentRoot) {
+    //
+    if (currentRoot == null) {
+      return 0;
+    }
+    let leftNode = balancedHeight(currentRoot.left);
+    if (leftNode == -1) return -1;
+    let rightNode = balancedHeight(currentRoot.right);
+    if (rightNode == -1) return -1;
+
+    if (Math.abs(leftNode - rightNode) > 1) return -1;
+
+    return Math.max(leftNode, rightNode) + 1;
   }
 
   function rebalance() {
@@ -199,6 +251,9 @@ function tree(array) {
     inorder,
     preorder,
     postorder,
+    height,
+    depth,
+    isBalanced,
   };
 }
 
@@ -211,20 +266,27 @@ function randomArray(numOfItems) {
   return arr;
 }
 
-let myArr = randomArray(15);
+// let myArr = randomArray(15);
+let myArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 let myTree = tree(myArr);
 let myRoot = myTree.root;
-myTree.insertData(8);
-myTree.insertData(5);
-myTree.insertData(30);
+// myTree.insertData(8);
+// myTree.insertData(5);
+// myTree.insertData(30);
 myTree.insertData(16);
-prettyPrint(myRoot);
+// myTree.insertData(17);
+// myTree.insertData(18);
+// prettyPrint(myRoot);
 // myTree.deleteData(myTree.root, 23);
-// prettyPrint(myTree.root);
+prettyPrint(myTree.root);
 // myTree.levelOrder();
-console.log(myTree.inorder(myRoot));
-console.log(myTree.preorder(myRoot));
-console.log(myTree.postorder(myRoot));
+// console.log(myTree.inorder(myRoot));
+// console.log(myTree.preorder(myRoot));
+// console.log(myTree.postorder(myRoot));
+// console.log(myTree.height(8));
+// console.log(myTree.depth(8));
+console.log(myTree.isBalanced());
+
 // myTree.preorder(myTree.root);
 // myTree.postorder(myTree.root);
 
