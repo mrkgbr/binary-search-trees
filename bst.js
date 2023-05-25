@@ -144,37 +144,37 @@ function tree(array) {
     }
   }
 
-  function inorder(root = null) {
+  function inorder(currentRoot) {
     // traverse the tree in inorder
     // and return an array of values
-    if (root == null) return [];
-    let left = inorder(root.left);
-    let data = [root.data];
-    let right = inorder(root.right);
+    if (currentRoot == null) return [];
+    let left = inorder(currentRoot.left);
+    let data = [currentRoot.data];
+    let right = inorder(currentRoot.right);
     return [...left, ...data, ...right];
   }
 
-  function preorder(root = null) {
+  function preorder(currentRoot) {
     // traverse the tree in preorder
     // and return an array of values
-    if (root == null) return [];
-    let data = [root.data];
-    let left = preorder(root.left);
-    let right = preorder(root.right);
+    if (currentRoot == null) return [];
+    let data = [currentRoot.data];
+    let left = preorder(currentRoot.left);
+    let right = preorder(currentRoot.right);
     return [...data, ...left, ...right];
   }
 
-  function postorder(root = null) {
+  function postorder(currentRoot) {
     // traverse the tree in postorder
     // and return an array of values
-    if (root == null) return [];
-    let left = postorder(root.left);
-    let right = postorder(root.right);
-    let data = [root.data];
+    if (currentRoot == null) return [];
+    let left = postorder(currentRoot.left);
+    let right = postorder(currentRoot.right);
+    let data = [currentRoot.data];
     return [...left, ...right, ...data];
   }
 
-  function height(data, currentRoot = root) {
+  function height(data, currentRoot) {
     // Accepts a node and returns its height.
     // Height is defined as the number of edges
     // in longest path from a given node to a leaf node.
@@ -200,7 +200,7 @@ function tree(array) {
     }
   }
 
-  function depth(data, currentRoot = root) {
+  function depth(data, currentRoot) {
     //
     if (currentRoot == null) return;
     let counter = 0;
@@ -217,7 +217,7 @@ function tree(array) {
     return counter;
   }
 
-  function isBalanced(currentRoot = root) {
+  function isBalanced(currentRoot) {
     // Accepts a node and returns its depth.
     // Depth is defined as the number of edges
     // in path from a given node to the tree’s root node.
@@ -244,11 +244,11 @@ function tree(array) {
     return Math.max(leftNode, rightNode) + 1;
   }
 
-  function rebalance(currentRoot = root) {
+  function rebalance(currentRoot) {
     //
     let arr = preorder(currentRoot);
     let newRoot = buildTree(arr);
-    myTree.root = newRoot;
+    return newRoot;
   }
 
   return {
@@ -276,35 +276,29 @@ function randomArray(numOfItems) {
   return arr;
 }
 
-// let myArr = randomArray(15);
-let myArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-let myTree = tree(myArr);
-let myRoot = myTree.root;
-// myTree.insertData(8);
-// myTree.insertData(5);
-// myTree.insertData(30);
-myTree.insertData(16);
-myTree.insertData(17);
-myTree.insertData(18);
-// prettyPrint(myRoot);
-// myTree.deleteData(myTree.root, 23);
-prettyPrint(myTree.root);
-// myTree.levelOrder();
-// console.log(myTree.inorder(myRoot));
-// console.log(myTree.preorder(myRoot));
-// console.log(myTree.postorder(myRoot));
-// console.log(myTree.height(8));
-// console.log(myTree.depth(8));
-// console.log(myTree.isBalanced());
+function randomInsert(numOfTimes) {
+  for (let i = 0; i < numOfTimes; i++) {
+    let randomNum = Math.floor(Math.random() * 1000);
+    myTree.insertData(randomNum);
+  }
+}
 
-// myTree.preorder(myTree.root);
-// myTree.postorder(myTree.root);
-myTree.rebalance();
-prettyPrint(myTree.root);
-/*
-1. Take an array
-2. Set middle as root
-3. Split the array to left and right
-4. Left contains a new array with items left to the middle, same to right.
-1...
-*/
+let myArr = randomArray(15);
+let myTree = tree(myArr);
+console.log("Tree is balanced: " + myTree.isBalanced(myTree.root));
+console.log("Inorder:");
+console.log(myTree.inorder(myTree.root));
+console.log("Preorder:");
+console.log(myTree.preorder(myTree.root));
+console.log("Postorder:");
+console.log(myTree.postorder(myTree.root));
+randomInsert(80);
+console.log("Tree is balanced: " + myTree.isBalanced(myTree.root));
+myTree.root = myTree.rebalance(myTree.root);
+console.log("Tree is balanced: " + myTree.isBalanced(myTree.root));
+console.log("Inorder:");
+console.log(myTree.inorder(myTree.root));
+console.log("Preorder:");
+console.log(myTree.preorder(myTree.root));
+console.log("Postorder:");
+console.log(myTree.postorder(myTree.root));
